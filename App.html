@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<title>Gieon Zozingao's Javascript Calcualtor</title>
+	</head>
+	<body>
+		<header class="page-header fixed-top">
+			<div class="navbar">
+				<nav>
+					<ul class="list-unstyled list-inline">
+						<li class="nav-brand-name">Pacifica Prime 2021</li>
+						<li class="nav-item"> Javascript Calculator Project</li>
+
+					</ul>
+				</nav>
+				<nav class="nav-itme-right">
+					<u class="list-unstyled list-inline">
+					</u>
+				</nav>
+			</div>
+		</header>
+		<div class="main">
+
+			<div class="calculator">
+				<div class="calc-header">
+					<ul class="list-inline list-unstyled">
+						<li><img src="logo.png" class="log img-small" alt="SM Logo"></li>
+						<li>
+							<h1>
+								Switch Maven Calculator
+							</h1>
+						</li>
+					</ul>
+				</div>
+				<div class="calc-screen">
+					<p class="formula-bar">
+
+					</p>
+					<h2 class="result">
+
+					</h2>
+				</div>
+				<div class="keypad">
+					<div class="special-keys">
+						<button class="button c-button" value="AC">AC</button>
+						<button class="button special-key" value="DEL"> DEL</button>
+						<button class="button special-key" value="(">(</button>
+						<button class="button special-key" value=")">)</button>
+					</div>
+					<div class="number-keys">
+						<button class="button number-button" value="7">7</button>
+						<button class="button number-button" value="8">8</button>
+						<button class="button number-button" value="9">9</button>
+						<button class="button operation-button" value="+">+</button>
+						<button class="button number-button" value="4">4</button>
+						<button class="button number-button" value="5">5</button>
+						<button class="button number-button" value="6">6</button>
+						<button class="button operation-button" value="-">-</button>
+						<button class="button number-button" value="1">1</button>
+						<button class="button number-button" value="2">2</button>
+						<button class="button number-button" value="3">3</button>
+						<button class="button operation-button " value="*">&times;</button>
+						<button class="button  special-key" value=".">.</button>
+						<button class="button number-button " value="0">0</button>
+						<button class="button operation-button" value="=">=</button>
+						<button class="button operation-button" value="/">/</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="app-footer">
+			<h3 class="footer-text text-center"> Developed by Gideon Zozingo</h3>
+		</footer>
+		<script type="text/javascript">
+			let keys = document.querySelectorAll(".calculator button");
+			let operators = ['+', '-', '*', '/'];
+			let decimalAdded = false;
+			for (let j = 0; j < keys.length; j++) {
+				keys[j].onclick = function (e) {
+					let formula = document.querySelector(".formula-bar");
+					let result = document.querySelector(".result");
+					let inputVal = formula.innerText;
+					//formula.innerText="";
+					let btnVal = this.getAttribute("value");
+					//formula.innerText += btnVal;
+					if (btnVal === "=") {
+						let equation = inputVal;
+						//get the  last element of the equation (last input) and store  in lastChar
+						let lastChar = equation[equation.length - 1];
+
+						if (operators.indexOf(lastChar) > -1 || lastChar == ".")
+							equation = equation.replace(/.$/, '');
+						if (equation)
+							result.innerText = eval(equation);
+						formula.innerText = "";
+						decimalAdded = false;
+					} else if (btnVal === "AC") {
+						formula.innerText = "";
+						result.innerText = "";
+						decimalAdded = false;
+					}
+					else if (inputVal == "" && operators.indexOf(btnVal) > -1) {
+						formula.innerText = "";
+					} else if (btnVal === "DEL") {
+						let equation = inputVal;
+						let lastChar = equation[equation.length - 1];
+						equation = equation.replace(lastChar, "")
+						formula.innerText= equation;
+					}
+
+					else if(operators.indexOf(btnVal)>-1){
+						// Operator is clicked
+						// Get the last character from the equation
+						let equation = inputVal;
+						let lastChar=equation[equation.length - 1];
+						if(equation != '' && operators.indexOf(lastChar) == -1) 
+							formula.innerText += btnVal;
+						else if(equation == '' && btnVal == '-') 
+								formula.innerText += btnVal;
+							if(operators.indexOf(lastChar) > -1 && formula.length > 1) {
+
+								formula.innerText = formula.replace(/.$/, btnVal);
+						}
+						decimalAdded =false;
+
+					}
+
+					else if(btnVal == '.') {
+							if(!decimalAdded) {
+								formula.innerText += btnVal;
+								decimalAdded = true;
+							}
+						}
+
+					else {
+
+						formula.innerText += btnVal;
+					}
+
+					e.preventDefault();
+
+				}
+
+			}
+		</script>
+		<script type="text/javascript">
+	// Get all the keys  values from document
+		// 
+		// let keys = document.querySelectorAll(".calculator button");
+		// let operators = ['+', '-', '*', '/'];
+		// let decimalAdded = false;
+
+		// for(let i=0; i<keys.length;i++){
+		// 		keys[i].onclick = function(e) {
+		// 		let input = document.querySelector('.formula-bar');
+		// 		let result=document.querySelector('.result');
+		// 			result.innerText="";
+		// 		let inputVal = input.innerText;
+		// 		let btnVal = this.getAttribute("value");
+		// 		if(btnVal =='AC') {
+		// 				input.innerText = '';
+		// 				decimalAdded = false;
+		// 			}
+
+		// 		else if(btnVal =='DEL') 
+		// 		{
+		// 					let equation = inputVal;
+		// 					if(equation==""){
+		// 						input.innerText="";
+		// 					}else{
+		// 						let lastChar = equation[equation.length - 1];
+		// 						input.innerText = lastChar;
+		// 					}
+
+		// 				}
+
+		// 				// If eval key is pressed, calculate and display the result
+		// 		else if(btnVal == '=') 
+		// 		{
+		// 					let  equation = inputVal;
+		// 					let lastChar = equation[equation.length - 1];
+		// 					if(operators.indexOf(lastChar) > -1 || lastChar == '.')
+		// 						equation = equation.replace(/.$/, '');
+
+		// 					if(equation)
+		// 						result.innerText = eval(equation);
+		// 						decimalAdded = false;
+		// 				}
+
+		// 				// Basic functionality of the calculator is complete. But there are some 	                   problems like 
+		// 				// 1. No two operators should be added consecutively.
+		// 				// 2. The equation shouldn't start from an operator except minus
+		// 				// 3. not more than 1 decimal should be there in a number
+
+		// 				// We'll fix these issues using some simple checks
+
+		// 				// indexOf works only in IE9+
+		// 				else if(operators.indexOf(btnVal) > -1) {
+		// 					// Operator is clicked
+		// 					// Get the last character from the equation
+		// 					let lastChar = inputVal[inputVal.length - 1];
+		// 					if(inputVal != '' && operators.indexOf(lastChar) == -1) 
+		// 						input.innerText += btnVal;
+		// 					else if(inputVal == '' && btnVal == '-') 
+		// 						input.innerText += btnVal;
+		// 					if(operators.indexOf(lastChar) > -1 && inputVal.length > 1) {
+
+		// 						input.innerText = inputVal.replace(/.$/, btnVal);
+		// 					}
+
+		// 					decimalAdded =false;
+		// 				}
+
+		// 				else if(btnVal == '.') {
+		// 					if(!decimalAdded) {
+		// 						input.innerText += btnVal;
+		// 						decimalAdded = true;
+		// 					}
+		// 				}
+
+		// 				else {
+		// 					input.innerText += btnVal;
+		// 				}
+
+		// 				// prevent page jumps
+		// 				e.preventDefault();
+		// 			} 
+		// }
+		</script>
+	</body>
+
+</html>
